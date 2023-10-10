@@ -6,12 +6,13 @@ function getTotalAccountsCount(accounts) {
   return accounts.length;
 }
 
-function getBooksBorrowedCount(books) {
-  return books.reduce((acc, book) => {
-    return acc + (book.borrows[0].returned === false);
-  }, 0);
+function countBorrowedBooks(acc, book) {
+  return acc + (book.borrows[0].returned === false);
 }
 
+function getBooksBorrowedCount(books) {
+  return books.reduce(countBorrowedBooks, 0);
+}
 function getMostCommonGenres(books) {
   const counts = books.map(book => book.genre).reduce((acc, genre) => {
     acc[genre] = (acc[genre] || 0) + 1;
